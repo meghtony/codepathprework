@@ -100,5 +100,43 @@ const template = `
 "img": ""
 },
 `
+// Parse the JSON string into an array of objects
+const GAMES_JSON = JSON.parse(games);
+
+// Step 1: Filter unfunded games
+const unfundedGames = GAMES_JSON.filter(game => game.pledged < game.goal);
+const numUnfunded = unfundedGames.length;
+
+// Step 2: Calculate total raised and total number of games
+const totalRaised = GAMES_JSON.reduce((sum, game) => sum + game.pledged, 0);
+const numGames = GAMES_JSON.length;
+
+// Step 2 (continued): Create a template string with proper grammar
+const displayStr = `A total of $${totalRaised.toLocaleString()} has been raised for ${numGames} games. Currently, ${numUnfunded} game${numUnfunded === 1 ? '' : 's'} remain unfunded. We need your help to fund these amazing games!`;
+
+// Step 3: Create a <p> element and append to the description container
+const paragraph = document.createElement('p');
+paragraph.textContent = displayStr;
+
+// Make sure there's a container in your HTML with this ID
+const descriptionContainer = document.getElementById('descriptionContainer');
+descriptionContainer.appendChild(paragraph);
+
+const sortedGames = [...GAMES_JSON].sort((a, b) => b.pledged - a.pledged);
+const [topGame, secondGame] = sortedGames;
+
+// Create <p> elements with game names
+const topGameText = document.createElement("p");
+topGameText.textContent = topGame.name;
+
+const secondGameText = document.createElement("p");
+secondGameText.textContent = secondGame.name;
+
+// Append to the corresponding cards in the DOM
+const firstGameContainer = document.getElementById("first-game");
+const secondGameContainer = document.getElementById("second-game");
+
+firstGameContainer.appendChild(topGameText);
+secondGameContainer.appendChild(secondGameText);
 
 export default games;
