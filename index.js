@@ -44,16 +44,35 @@ function addGamesToPage(games) {
 
 
         // append the game to the games-container
-    for(let i =0; i<games.length; i++){
-        let gamediv = document.createElement("div");
-        gamediv.classList.add("game-card");
-        let image1 = document.createElement("img");
-        image1.src = games[i].img;
-        gamediv.innerHTML = image1 + "<br />";
-        gamediv.innerHTML += games[i].name + "<br />";
-        gamediv.innerHTML += games[i].description;
-        gamediv.innerHTML += "<br />"+ "Backers: " + games[i].backers;
-        gamesContainer.append(gamediv);
+    // for(let i =0; i<games.length; i++){
+    //     let gamediv = document.createElement("div");
+    //     gamediv.classList.add("game-card");
+    //     let image1 = document.createElement("img");
+    //     image1.src = games[i].img;
+    //     gamediv.innerHTML = image1 + "<br />";
+    //     gamediv.innerHTML += games[i].name + "<br />";
+    //     gamediv.innerHTML += games[i].description;
+    //     gamediv.innerHTML += "<br />"+ "Backers: " + games[i].backers;
+    //     gamesContainer.append(gamediv);
+    // }
+    for (let i = 0; i < games.length; i++) {
+      const game = games[i];
+  
+      // Step 2: Create a new div with the class "game-card"
+      const gameCard = document.createElement('div');
+      gameCard.classList.add('game-card');
+  
+      // Step 3: Add inner HTML using template literals
+      gameCard.innerHTML = `
+        <img class="game-img" src="${game.img}" alt="${game.name} cover image">
+        <h3>${game.name}</h3>
+        <p>${game.description}</p>
+        <p><strong>Backers:</strong> ${game.backers}</p>
+      `;
+  
+      // Step 4: Append to the DOM under the "Our Games" section
+      const gamesContainer = document.getElementById('games-container');
+      gamesContainer.appendChild(gameCard);
     }
 
 }
